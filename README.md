@@ -1,1 +1,1 @@
-"Full stack open teht‰v‰t" 
+Full stack open teht√§v√§t
