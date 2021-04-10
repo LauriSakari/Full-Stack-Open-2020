@@ -2,63 +2,55 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 
-const Countries = (props) =>  {
-  console.log('Countries ', props)
-  if (props.filteredCountries.length === 0 && props.filter.length > 0) {
-    return (
-    <div>
-      <p>Hakuehdoillasi ei löytynyt tuloksia</p>
+const Country = (props) => {
+  const tulostettavat = props.filteredCountries.map(country =>
+    <p key={country.name}>{country.name} {<button onClick={() => props.handleButton(country.name)} > Show </button>}</p> )
+    
+    if (props.filteredCountries.length === 0 && props.filter.length > 0) {
+      return (
+      <div>
+        <p>Hakuehdoillasi ei löytynyt tuloksia</p>
+      </div>
+      )
+    } else if (tulostettavat.length === 0 || props.filteredCountries.length === 0
+      || props.filter.length === 0) {
+      return (
+        <div>
+        <p>Syötä maan nimi</p>
+        </div>
+      ) 
+    }  else if (tulostettavat.length > 10)  {
+      return       <div>
+      <p>Tarkenna hakua</p>
     </div>
-    )
-  } else if (props.filteredCountries.length > 10 && props.filter.length > 0) {
-    return (
-      <div>
-        <p>Tarkenna hakua</p>
-      </div>
-    )
-  } else if (props.countries.length === 0 || props.filteredCountries.length === 0
-    || props.filter.length === 0) {
-    return (
-      <div>
-      <p>Syötä maan nimi</p>
-      </div>
-    ) 
-  } else if (props.filteredCountries.length === 1) {
+    }
+    
+    else if (props.filteredCountries.length === 1) {
 
-    return (  
-      <div>
-        {props.filteredCountries.map(country => 
-          <div key={country.name}> 
-            <h2>{country.name} </h2>
-            <p>Capital: {country.capital} </p>
-            <p>Population: {country.population } </p> 
-          </div>)}
-        <ul>
-         {props.filteredCountries[0].languages.map(language =>
-           <li key={language.name}>{language.name}</li>
-          )}
-        </ul>
-
-         <img src={props.filteredCountries[0].flag} alt='flag' height={200} />
-      </div>
-    )
-  }
+      return (  
+        <div>
+          {props.filteredCountries.map(country => 
+            <div key={country.name}> 
+              <h2>{country.name} </h2>
+              <p>Capital: {country.capital} </p>
+              <p>Population: {country.population } </p> 
+            </div>)}
+          <h2>Languages</h2>
+          <ul>
+           {props.filteredCountries[0].languages.map(language =>
+             <li key={language.name}>{language.name}</li>
+            )}
+          </ul>
   
-  else {
-    return (
-      <div>
-      {props.filteredCountries.map(country => 
-        <div key={country.name}>
-        <p > {country.name}  
-        <button >
-          Show
-        </button>
-        </p>
-        </div>)}
-      </div>
-  )
-  }
+           <img src={props.filteredCountries[0].flag} alt='flag' height={200} />
+        </div>
+      )
+    }
+
+    return <div>{tulostettavat}</div>
+
 }
+
 
 const App = () => {
 
@@ -71,42 +63,38 @@ const App = () => {
     axios.get('https://restcountries.eu/rest/v2/all')
     .then(response => {
       console.log('effect fulfilled')
-      setCountries(response)
-      console.log('countries setted as response')
-      setCountries(response)
+      setCountries(response.data)
     })
   }, [])
 
-  console.log(countries)
-
   const handleFilterChange = (event) => {
-    console.log('handle filter ', event.target.value)
     setFilter(event.target.value)
     let value = event.target.value.toUpperCase()
-    setFilteredCountries(countries.data.filter(country => country.name.toUpperCase().includes(value)))
+    setFilteredCountries(countries.filter(country => country.name.toUpperCase().includes(value)))
+    
   }
-  
-console.log('filtered countries ', filteredCountries)
-console.log('countries ulkona ', countries)
-  
 
-  console.log('filter ulkona ', filter)
+  const handleButton = (props) =>  {
+    let loput = filteredCountries.filter(country => country.name.includes(props) )
+    setFilteredCountries(loput)
+  }
 
   return (
     <div>
       <div>
-      <h1>Moi, tämä on maiden tiedot appi!</h1>
+      <h1>Maiden tiedot</h1>
       </div>
 
       Filter: <input onChange={handleFilterChange}/>
-     
-      <Countries countries = {countries}
-      filteredCountries = {filteredCountries}
-      filter = {filter}/>
-      
     
+      
+        <Country 
+          handleButton={handleButton}
+          filter={filter}
+          filteredCountries={filteredCountries}
+          />
     </div>
-  );
+   )
 }
 
 export default App;
