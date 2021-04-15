@@ -11,13 +11,11 @@ const App = () => {
   const [filter, setFilter] = useState('')
   const [filteredCountries, setFilteredCountries] = useState([])
 
- const apiKey = process.env.REACT_APP_API_KEY
+  const apiKey = process.env.REACT_APP_API_KEY
 
   useEffect(() => {
-    console.log('effect')
     axios.get('https://restcountries.eu/rest/v2/all')
     .then(response => {
-      console.log('effect fulfilled')
       setCountries(response.data)
     })
   }, [])

@@ -4,24 +4,19 @@ import axios from 'axios'
 const Weather = (props) => {  
     
     const [currentWeather, setCurrentWeather] = useState(null)
-    console.log(props)
+    
 
     const key = props.apiKey
     const capital = props.filteredCountries[0].capital
 
     useEffect(() => {
-        console.log('Weather hook effect')
         axios.get(`http://api.weatherstack.com/current?access_key=${key}&query=${capital}`)
         .then(response => {
-            console.log('promise fulfilled')
             setCurrentWeather(response.data)
         })
     }, [key, capital])
-
-    console.log(currentWeather)
     
     return (
-
     <div>   
         {currentWeather !== null ?
         <>
