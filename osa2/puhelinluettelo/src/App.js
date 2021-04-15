@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 
 import personService from './services/persons'
 
+import './index.css'
+
 const Filter = (props) => {
   return (
     <div>
@@ -38,12 +40,27 @@ const PersonForm = (props) => {
     )
   }
 
+  const Notification = ({message}) => {
+    console.log(message)
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div className="notification">
+        {message}
+      </div>
+    )
+
+  }
+
 const App = () => {
   const [ persons, setPersons] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState([])
   const [ filterValue, setFilterValue ] = useState('')
+  const [ notification, setNotification ] = useState(null)
 
   useEffect(() => {
     personService
@@ -72,7 +89,11 @@ const App = () => {
             tulostettava = persons.map(nameObject => nameObject.id !== changedNameObject.id ? nameObject : response)
             setPersons(tulostettava)}
           )
-         
+          
+          setNotification(`${newName} has been given a new number`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 2000)
         }
       }
      
@@ -87,6 +108,10 @@ const App = () => {
         setNewFilter(persons.concat(response))
         setNewName('')
         setNewNumber('')
+        setNotification(`Added ${nameObject.name} to phonebook`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 2000)
       })
     }
     setNewName('');
@@ -102,6 +127,10 @@ const App = () => {
       setPersons(persons.filter(person => person.id !== id))
       setNewFilter('')
     })
+    setNotification(`Removed ${name} from phonebook`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 2000)
     }
   }
 
@@ -131,6 +160,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+        <Notification message={notification}/>
         <Filter value={filterValue} onChange ={handleFilterChange}/>
       <h2>Add new</h2>
         <PersonForm onSubmit = {addNewName} nameInputValue ={newName}
