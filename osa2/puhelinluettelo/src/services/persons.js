@@ -17,10 +17,10 @@ const removeName = (id) =>  {
 }
 
 const changeNumber = (changedNameObject) =>    {
-    console.log('terveiset personsista ', changedNameObject)
     const request = axios.put(`${baseUrl}/${changedNameObject.id}`, changedNameObject)
     
     return request.then(response => response.data)
+
 }
 
 const personService = { getAll, addNew, removeName, changeNumber }
