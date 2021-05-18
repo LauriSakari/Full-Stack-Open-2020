@@ -169,6 +169,8 @@ const App = () => {
   }
 
   const handleFilterChange = (event) => {
+    console.log('handlefilter', persons)
+    console.log(persons[0].name)
     let value = event.target.value.toUpperCase();
     setNewFilter(persons.filter(person => person.name.toUpperCase().includes(value)))
     setFilterValue(event.target.value)
