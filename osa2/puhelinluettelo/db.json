@@ -17,6 +17,7 @@
     },
     {
       "name": "Lauri",
+<<<<<<< HEAD
       "number": "484684",
       "apiId": "api",
       "id": 4
@@ -31,6 +32,10 @@
       "name": "Mauri",
       "number": 7548875,
       "id": 6
+=======
+      "number": "153548",
+      "id": 4
+>>>>>>> parent of 4d54a15... tehtävä 2.20 tehty
     }
   ]
 }

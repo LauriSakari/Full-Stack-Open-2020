@@ -41,6 +41,7 @@ const PersonForm = (props) => {
   }
 
   const Notification = ({message}) => {
+    console.log(message)
     if (message === null) {
       return null
     }
@@ -49,18 +50,9 @@ const PersonForm = (props) => {
       <div className="notification">
         {message}
       </div>
-    )}
+    )
 
-  const ErrorNotification = ({errorMessage}) => {
-    if (errorMessage === null) {
-      return null
-    }
-  
-    return (
-      <div className="errorNotification">
-        {errorMessage}
-      </div>
-    )}
+  }
 
 const App = () => {
   const [ persons, setPersons] = useState([]) 
@@ -69,7 +61,6 @@ const App = () => {
   const [ newFilter, setNewFilter ] = useState([])
   const [ filterValue, setFilterValue ] = useState('')
   const [ notification, setNotification ] = useState(null)
-  const [ errorNotification, setErrorNotification ] = useState(null)
 
   useEffect(() => {
     personService
@@ -98,19 +89,12 @@ const App = () => {
             tulostettava = persons.map(nameObject => nameObject.id !== changedNameObject.id ? nameObject : response)
             setPersons(tulostettava)}
           )
-          .catch(error => {
-            setErrorNotification(`Information of ${newName} has already been removed from phonebook`)
-              setTimeout(() => {
-                setErrorNotification(null)
-              }, 2000)
-            setPersons(persons.filter(person => person.id !== changedNameObject.id))  
-          })
-          setNotification(`Number of ${newName} has been changed`)
+          
+          setNotification(`${newName} has been given a new number`)
           setTimeout(() => {
             setNotification(null)
           }, 2000)
         }
-        
       }
      
       else  {
@@ -137,26 +121,16 @@ const App = () => {
   const handleDeleteOf = (id, name) => {
     if (window.confirm(`Delete ${name}`))    {
     
-    personService 
+    personService
     .removeName(id)
     .then( () => {
       setPersons(persons.filter(person => person.id !== id))
       setNewFilter('')
     })
-    .catch(error => {
-      setErrorNotification(`Information of ${name} has already been removed from phonebook`)
-        setTimeout(() => {
-          setErrorNotification(null)
-        }, 2000)
-      setPersons(persons.filter(person => person.id !== id))
-      console.log(persons)
-    })
     setNotification(`Removed ${name} from phonebook`)
-    console.log('removed ')
         setTimeout(() => {
           setNotification(null)
         }, 2000)
-      
     }
   }
 
@@ -188,10 +162,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      {errorNotification !== null ?
-      <ErrorNotification errorMessage={errorNotification}/>
-      :  <Notification message={notification}/>}
-        
+        <Notification message={notification}/>
         <Filter value={filterValue} onChange ={handleFilterChange}/>
       <h2>Add new</h2>
         <PersonForm onSubmit = {addNewName} nameInputValue ={newName}
