@@ -1,7 +1,10 @@
 require('dotenv').config()
 
 let PORT = process.env.PORT
-let mongoUrl = process.env.mongoUrl
+
+const mongoUrl = process.env.NODE_ENV === 'test'
+  ? process.env.test_mongoUrl
+  : process.env.mongoUrl
 
 module.exports = {
   mongoUrl,

@@ -1,4 +1,0 @@
-
-> blogilista@1.0.0 test C:\Users\lauri\Full-Stack-Open-2020\osa4\blogilista
-> jest --verbose "-t" "test('of" "empty" "list" "is" "zero'," "()" "="
-
