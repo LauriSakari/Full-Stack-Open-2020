@@ -16,16 +16,38 @@ const addNew = async newObject => {
   const config = {
     headers: { Authorization: token },
   }
-  try{
+  console.log('blogservice ', newObject)
   const response = await axios.post(baseUrl, newObject, config)
-  console.log('addNew response ', response)
   return response.data
-  }
-  catch(exeption) {
-    throw(exeption)
-  }
 }
 
-const exports = { getAll, addNew, setToken }
+
+const addLike = async likedObject => {
+  const url = baseUrl.concat('/',likedObject.blogId)
+  const config = {
+    headers: { Authorization: token }
+  }
+  const blogInfo = {
+    user: likedObject.user.id,
+    likes: likedObject.likes,
+    author: likedObject.author,
+    title: likedObject.title,
+    url: likedObject.url
+  }
+  const response = await axios.put(url, blogInfo, config)
+  return response.data
+}
+
+const removeBlog = async blogId => {
+  const url = baseUrl.concat('/', blogId)
+  const config = {
+    headers: { Authorization: token }
+  }
+  const response = await axios.delete(url, config)
+  console.log('blogcontroller response.data ', response)
+  return response
+}
+
+const exports = { getAll, addNew, setToken, addLike, removeBlog }
 
 export default exports
