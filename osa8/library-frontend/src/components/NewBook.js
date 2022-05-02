@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { NEW_BOOK, ALL_BOOKS, ALL_AUTHORS } from '../queries'
+import Notify from './Notify'
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -8,9 +9,16 @@ const NewBook = (props) => {
   const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
+  const [error, setError] = useState(null)
 
   const [ createBook ] = useMutation(NEW_BOOK, {
-    refetchQueries: [ {query: ALL_AUTHORS }, { query: ALL_BOOKS } ]
+    refetchQueries: [ {query: ALL_AUTHORS }, { query: ALL_BOOKS } ],
+    onError: (error) => {
+      setError(error.message)
+      setTimeout(() => {
+          setError(null)
+        }, 5000)
+    }
   })
 
   if (!props.show) {
@@ -21,6 +29,9 @@ const NewBook = (props) => {
     event.preventDefault()
 
     const publishedInt = parseInt(published)
+    if (genres.length === 0) {
+      setGenres(undefined)
+    }
     createBook({ variables: { title, author, published: publishedInt, genres } })
 
     setTitle('')
@@ -37,6 +48,7 @@ const NewBook = (props) => {
 
   return (
     <div>
+      <Notify errorMessage = {error}/>
       <form onSubmit={submit}>
         <div>
           title

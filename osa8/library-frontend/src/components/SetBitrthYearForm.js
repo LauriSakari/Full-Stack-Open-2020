@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client"
 import { useState } from "react"
 import { SET_BIRTHYEAR } from "../queries"
+import Notify from "./Notify"
 
 const SetBirthYearForm = ({ authors }) => {
 
@@ -52,16 +53,5 @@ return (
     )
 
 }
-
-const Notify = ({errorMessage}) => {
-    if ( !errorMessage ) {
-      return null
-    }
-    return (
-      <div style={{color: 'red'}}>
-        {errorMessage}
-      </div>
-    )
-  }
 
 export default SetBirthYearForm

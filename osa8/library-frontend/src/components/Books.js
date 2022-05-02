@@ -1,38 +1,66 @@
-import { gql, useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client"
+import { useState } from "react"
+import { FILTER_BY_GENRE } from "../queries"
 
-const ALL_BOOKS = gql`
-query {
-  allBooks {
-    author
-    genres
-    id
-    published
-    title
-  }
+const BooksByGenre = ({ genre, filteredBooks, uniqueGenres, setGenre }) => {
+  return(
+    <div>
+      <h2>books</h2>
+      <p>in genre {genre}</p>
+      <table>
+        <tbody>
+          <tr>
+            <th></th>
+            <th>author</th>
+            <th>published</th>
+          </tr>
+          {filteredBooks.map((a) => (
+            <tr key={a.title}>
+              <td>{a.title}</td>
+              <td>{a.author.name}</td>
+              <td>{a.published}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {uniqueGenres.map((genre) => <button key={genre} onClick={() => setGenre(genre)}>{genre}</button>)}
+      <button onClick={() => setGenre('')}>all genres</button>
+
+    </div>
+  )
 }
-`
 
-const Books = (props) => {
+const Books = ({show, books}) => {
 
-  console.log('propsit', props)
+  const [genre, setGenre] = useState(null)
 
-  const result = useQuery(ALL_BOOKS)
+  const genreResult = useQuery(FILTER_BY_GENRE, {
+    variables: { genre },
+    skip: !genre
+  })
 
-  if (!props.show) {
+  if (genreResult.loading) {
+    return <div>loading...</div>
+  }
+
+  if (!show) {
     return null
   }
 
-  console.log(result)
-  console.log(result.data)
+  const genres = books.flatMap((book) => book.genres)
 
-  const books = result.data.allBooks
+  const uniqueGenres = [...new Set(genres)]
 
-  console.log('books', books)
+  if (genre && genreResult.data) {
+    return (
+      <BooksByGenre genre={genre} filteredBooks={genreResult.data.allBooks} 
+      uniqueGenres={uniqueGenres} setGenre={setGenre}/>)
+  }
+
 
   return (
     <div>
       <h2>books</h2>
-
       <table>
         <tbody>
           <tr>
@@ -43,12 +71,14 @@ const Books = (props) => {
           {books.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
-              <td>{a.author}</td>
+              <td>{a.author.name}</td>
               <td>{a.published}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      {uniqueGenres.map((genre) => <button key={genre} onClick={() => setGenre(genre)}>{genre}</button>)}
+      <button onClick={() => setGenre('')}>all genres</button>
     </div>
   )
 }

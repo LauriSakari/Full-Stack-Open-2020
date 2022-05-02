@@ -8,6 +8,12 @@ const Authors = (props) => {
 
   const authors = props.authors
 
+  const isAuthorized = () => {
+    if (props.authorized) {
+    return( <SetBirthYearForm authors = {authors}/> )
+    }
+  }
+
   return (
     <div>
       <h2>authors</h2>
@@ -27,7 +33,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <SetBirthYearForm authors = {authors}/>
+      {isAuthorized()}
     </div>
     
   )

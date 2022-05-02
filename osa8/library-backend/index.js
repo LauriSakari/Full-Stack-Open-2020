@@ -8,8 +8,6 @@ require('dotenv').config()
 
 const mongoUri = process.env.MONGODB_URI
 
-console.log('connecting to ', mongoUri)
-
 const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY'
 
 mongoose.connect(mongoUri)
@@ -103,9 +101,9 @@ const typeDefs = gql`
 `
 
 const resolvers = {
-  Query: {  
+  Query: {
     me: (root, args, context) => {
-      context.currentUser
+      return context.currentUser
    },
       bookCount: async () => Book.collection.countDocuments(),
       authorCount: async() => Author.collection.countDocuments(),
@@ -139,7 +137,6 @@ const resolvers = {
     addBook: async (root, args, context) => {
       const suggestedAuthor = args.author
       const currentUser = context.currentUser
-      console.log('addbook toimii')
       if (!currentUser) {
         throw new AuthenticationError("not authenticated")
       }
@@ -213,13 +210,13 @@ const resolvers = {
   
       const userForToken = {
         username: user.username,
+        favoriteGenre: user.favoriteGenre,
         id: user._id,
       }
-  
-      const token =  { value: jwt.sign(userForToken, JWT_SECRET) }
-      console.log(token)
+ 
+      const token = { value: jwt.sign(userForToken, JWT_SECRET)}
       return token
-    }
+      }
     }
 }
 
