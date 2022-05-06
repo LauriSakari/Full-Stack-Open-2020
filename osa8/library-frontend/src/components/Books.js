@@ -3,10 +3,15 @@ import { useState } from "react"
 import { FILTER_BY_GENRE } from "../queries"
 
 const BooksByGenre = ({ genre, filteredBooks, uniqueGenres, setGenre }) => {
+
+  const boldStyle = {
+    fontWeight: 'bold'
+    }
+
   return(
     <div>
       <h2>books</h2>
-      <p>in genre {genre}</p>
+      <p>in genre <span style={boldStyle}>{genre}</span></p>
       <table>
         <tbody>
           <tr>

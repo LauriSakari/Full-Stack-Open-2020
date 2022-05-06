@@ -9,6 +9,9 @@ const result = useQuery(FILTER_BY_GENRE, {
   skip: !show
 })
 
+const boldStyle = {
+  fontWeight: 'bold'
+  }
 
 if (result.loading) {
     return <div>loading...</div>
@@ -23,7 +26,7 @@ const filteredBooks = result.data.allBooks
   return (  
     <div>
         <h1>Recommendations</h1>
-        <p>Books in your favorite genre {favoriteGenre}</p>
+        <p>Books in your favorite genre <span style={boldStyle}> {favoriteGenre}</span></p>
         <table>
         <tbody>
           <tr>
