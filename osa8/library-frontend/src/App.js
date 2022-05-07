@@ -8,7 +8,6 @@ import { useQuery, useSubscription, useApolloClient} from '@apollo/client'
 import { ALL_AUTHORS, ALL_BOOKS, ME, BOOK_ADDED} from './queries'
 
 export const updateCache = (cache, query, addedBook) => {
-  console.log('updateCache toimii')
   const uniqByName = (a) => {
     let seen = new Set()
     return a.filter((item) => {
@@ -31,8 +30,6 @@ const App = () => {
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       const addedBook = subscriptionData.data.bookAdded
-      console.log('usesubscription toimii')
-      console.log(subscriptionData)
       alert(`Book titled ${addedBook.title} was added to the library`)
 
       updateCache(client.cache, { query: ALL_BOOKS }, addedBook)

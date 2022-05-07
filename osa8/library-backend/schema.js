@@ -7,6 +7,7 @@ const typeDefs = gql`
     born: Int
     id: ID! 
     bookCount: Int
+    authorsBooks: [Book]
   }
 
   type Book {
