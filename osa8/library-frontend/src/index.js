@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { setContext } from 'apollo-link-context'
 
-import { 
+import {
   ApolloClient, ApolloProvider, HttpLink, InMemoryCache,
   split } from '@apollo/client'
 

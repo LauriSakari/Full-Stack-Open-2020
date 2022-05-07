@@ -1,12 +1,12 @@
-import { useQuery } from "@apollo/client"
-import { useState } from "react"
-import { FILTER_BY_GENRE } from "../queries"
+import { useQuery } from '@apollo/client'
+import { useState } from 'react'
+import { FILTER_BY_GENRE } from '../queries'
 
 const BooksByGenre = ({ genre, filteredBooks, uniqueGenres, setGenre }) => {
 
   const boldStyle = {
     fontWeight: 'bold'
-    }
+  }
 
   return(
     <div>
@@ -28,14 +28,15 @@ const BooksByGenre = ({ genre, filteredBooks, uniqueGenres, setGenre }) => {
           ))}
         </tbody>
       </table>
-      {uniqueGenres.map((genre) => <button key={genre} onClick={() => setGenre(genre)}>{genre}</button>)}
+      {uniqueGenres.map((genre) => <button key={genre}
+        onClick={() => setGenre(genre)}>{genre}</button>)}
       <button onClick={() => setGenre('')}>all genres</button>
 
     </div>
   )
 }
 
-const Books = ({show, books}) => {
+const Books = ({ show, books }) => {
 
   const [genre, setGenre] = useState(null)
 
@@ -58,8 +59,8 @@ const Books = ({show, books}) => {
 
   if (genre && genreResult.data) {
     return (
-      <BooksByGenre genre={genre} filteredBooks={genreResult.data.allBooks} 
-      uniqueGenres={uniqueGenres} setGenre={setGenre}/>)
+      <BooksByGenre genre={genre} filteredBooks={genreResult.data.allBooks}
+        uniqueGenres={uniqueGenres} setGenre={setGenre}/>)
   }
 
 
@@ -82,7 +83,8 @@ const Books = ({show, books}) => {
           ))}
         </tbody>
       </table>
-      {uniqueGenres.map((genre) => <button key={genre} onClick={() => setGenre(genre)}>{genre}</button>)}
+      {uniqueGenres.map((genre) => <button key={genre}
+        onClick={() => setGenre(genre)}>{genre}</button>)}
       <button onClick={() => setGenre('')}>all genres</button>
     </div>
   )

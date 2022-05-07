@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from '@apollo/client'
 
 const BOOK_DETAILS = gql`
   fragment BookDetails on Book {
@@ -86,22 +86,22 @@ export const SET_BIRTHYEAR = gql`
     }
   `
 
-  export const LOGIN = gql`
-    mutation login($username: String!, $password: String!) {
-      login(
-        username: $username, 
-        password: $password
-      ) {
-          value
-        }
-    }
-    `
-
-  export const BOOK_ADDED = gql`
-    subscription {
-      bookAdded {
-        ...BookDetails
+export const LOGIN = gql`
+  mutation login($username: String!, $password: String!) {
+    login(
+      username: $username, 
+      password: $password
+    ) {
+        value
       }
-    }
-  ${BOOK_DETAILS}
+  }
   `
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      ...BookDetails
+    }
+  }
+${BOOK_DETAILS}
+`

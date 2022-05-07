@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lauri Harjukoski",
@@ -24,6 +25,7 @@
     "subscriptions-transport-ws": "^0.11.0"
   },
   "devDependencies": {
+    "eslint": "^8.15.0",
     "nodemon": "^2.0.15"
   }
 }

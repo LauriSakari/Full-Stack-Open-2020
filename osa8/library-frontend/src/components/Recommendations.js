@@ -1,33 +1,33 @@
 
-import { useQuery } from "@apollo/client"
-import { FILTER_BY_GENRE } from "../queries"
+import { useQuery } from '@apollo/client'
+import { FILTER_BY_GENRE } from '../queries'
 
-const Recommendations = ({show, favoriteGenre}) => {
+const Recommendations = ({ show, favoriteGenre }) => {
 
-const result = useQuery(FILTER_BY_GENRE, {
-  variables:  { genre: favoriteGenre},
-  skip: !show
-})
+  const result = useQuery(FILTER_BY_GENRE, {
+    variables:  { genre: favoriteGenre },
+    skip: !show
+  })
 
-const boldStyle = {
-  fontWeight: 'bold'
+  const boldStyle = {
+    fontWeight: 'bold'
   }
 
-if (result.loading) {
+  if (result.loading) {
     return <div>loading...</div>
-}
+  }
 
-if (!show) {
-  return null
-}
+  if (!show) {
+    return null
+  }
 
-const filteredBooks = result.data.allBooks
+  const filteredBooks = result.data.allBooks
 
-  return (  
+  return (
     <div>
-        <h1>Recommendations</h1>
-        <p>Books in your favorite genre <span style={boldStyle}> {favoriteGenre}</span></p>
-        <table>
+      <h1>Recommendations</h1>
+      <p>Books in your favorite genre <span style={boldStyle}> {favoriteGenre}</span></p>
+      <table>
         <tbody>
           <tr>
             <th></th>

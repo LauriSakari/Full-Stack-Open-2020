@@ -1,7 +1,7 @@
-import { useMutation } from "@apollo/client"
-import { useState } from "react"
-import { SET_BIRTHYEAR } from "../queries"
-import Notify from "./Notify"
+import { useMutation } from '@apollo/client'
+import { useState } from 'react'
+import { SET_BIRTHYEAR } from '../queries'
+import Notify from './Notify'
 
 const SetBirthYearForm = ({ authors }) => {
 
@@ -11,11 +11,11 @@ const SetBirthYearForm = ({ authors }) => {
 
   const [ setBirthYear ] = useMutation(SET_BIRTHYEAR, {
     onError: (error) => {
-        setError(error.message)
-        setTimeout(() => {
-            setError(null)
-          }, 5000)
-      }
+      setError(error.message)
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+    }
   })
 
   const submit = async (event) => {
@@ -28,29 +28,29 @@ const SetBirthYearForm = ({ authors }) => {
     setBorn('')
   }
 
-return (
-    
+  return (
+
     <div>
-    <h2>Set birthyear</h2>
-    <Notify errorMessage = {error}/>
-    <form onSubmit={submit}>
-      
-      <select onChange={({ target }) => setName(target.value)}>
-        {authors.map((author) => (
-          <option key={ author.name } value={ author.name }>{ author.name }</option>
-        ))}
-      </select>
-      <div>
+      <h2>Set birthyear</h2>
+      <Notify errorMessage = {error}/>
+      <form onSubmit={submit}>
+
+        <select onChange={({ target }) => setName(target.value)}>
+          {authors.map((author) => (
+            <option key={ author.name } value={ author.name }>{ author.name }</option>
+          ))}
+        </select>
+        <div>
         born
-        <input
-          value={born}
-          onChange={({ target }) => setBorn(target.value)}
-        />
-      </div>
-      <button type="submit">update author</button>
-    </form>
+          <input
+            value={born}
+            onChange={({ target }) => setBorn(target.value)}
+          />
+        </div>
+        <button type="submit">update author</button>
+      </form>
     </div>
-    )
+  )
 
 }
 

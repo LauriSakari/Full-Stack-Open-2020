@@ -1,4 +1,4 @@
-import SetBirthYearForm from "./SetBitrthYearForm"
+import SetBirthYearForm from './SetBitrthYearForm'
 
 const Authors = (props) => {
 
@@ -10,7 +10,7 @@ const Authors = (props) => {
 
   const isAuthorized = () => {
     if (props.authorized) {
-    return( <SetBirthYearForm authors = {authors}/> )
+      return( <SetBirthYearForm authors = {authors}/> )
     }
   }
 
@@ -35,7 +35,6 @@ const Authors = (props) => {
       </table>
       {isAuthorized()}
     </div>
-    
   )
 }
 

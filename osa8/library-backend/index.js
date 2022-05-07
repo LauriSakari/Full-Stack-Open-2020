@@ -53,32 +53,32 @@ const start = async () => {
         const currentUser = await User
           .findById(decodedToken.id)
         return { currentUser }
-    }
-  },
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
-    {
-      async serverWillStart() {
-        return {
-          async drainServer() {
-            subscriptionServer.close()
-          },
-        }
-      },
+      }
     },
-  ],
-})
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close()
+            },
+          }
+        },
+      },
+    ],
+  })
 
-await server.start()
+  await server.start()
 
-server.applyMiddleware({
-  app,
-  path: '/',
-})
+  server.applyMiddleware({
+    app,
+    path: '/',
+  })
 
-const PORT = 4000
+  const PORT = 4000
 
-httpServer.listen(PORT, () =>
-  console.log(`Server is now running on http://localhost:${PORT}`)
+  httpServer.listen(PORT, () =>
+    console.log(`Server is now running on http://localhost:${PORT}`)
   )
 }
 

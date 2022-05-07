@@ -12,12 +12,12 @@ const NewBook = (props) => {
   const [error, setError] = useState(null)
 
   const [ createBook ] = useMutation(NEW_BOOK, {
-    refetchQueries: [ {query: ALL_AUTHORS }, { query: ALL_BOOKS } ],
+    refetchQueries: [{ query: ALL_AUTHORS }, { query: ALL_BOOKS } ],
     onError: (error) => {
       setError(error.message)
       setTimeout(() => {
-          setError(null)
-        }, 5000)
+        setError(null)
+      }, 5000)
     }
   })
 
